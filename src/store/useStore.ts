@@ -1,10 +1,6 @@
 // src/store/useStore.ts
 import { create } from "zustand";
-import {
-  loadPostsWithLocalStorage,
-  savePostsToLocalStorage,
-} from "../utils/localStorageHelpers";
-
+import { createJSONStorage, persist } from "zustand/middleware";
 export interface Post {
   id: number;
   author: string;
@@ -161,17 +157,23 @@ const defaultPosts: Post[] = [
   },
 ];
 
-const useStore = create<StoreState>((set) => ({
-  posts: loadPostsWithLocalStorage(defaultPosts),
-
-  toggleLike: (id: number) =>
-    set((state) => {
-      const updatedPosts = state.posts.map((post) =>
-        post.id === id ? { ...post, liked: !post.liked } : post
-      );
-      savePostsToLocalStorage(updatedPosts);
-      return { posts: updatedPosts };
+const useStore = create<StoreState>()(
+  persist(
+    (set) => ({
+      posts: defaultPosts,
+      toggleLike: (id: number) =>
+        set((state) => {
+          const updatedPosts = state.posts.map((post) =>
+            post.id === id ? { ...post, liked: !post.liked } : post
+          );
+          return { posts: updatedPosts };
+        }),
     }),
-}));
+    {
+      name: "posts-storage",
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);
 
 export default useStore;
