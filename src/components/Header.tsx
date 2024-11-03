@@ -14,7 +14,6 @@ const Header: React.FC = () => {
     } else {
       document.documentElement.classList.remove("dark");
     }
-    localStorage.setItem("darkMode", isDarkMode.toString());
   }, [isDarkMode]);
 
   return (
