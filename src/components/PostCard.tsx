@@ -14,7 +14,7 @@ const PostCard: React.FC<PostCardProps> = ({
   author,
   content,
   image,
-  liked
+  liked,
 }) => {
   const toggleLike = useStore((state) => state.toggleLike);
 
