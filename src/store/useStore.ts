@@ -8,6 +8,12 @@ export interface Post {
   liked: boolean;
 }
 
+export interface ToastMessage {
+  message: string;
+  type?: "info" | "success" | "error" | "warning";
+  duration?: number;
+}
+
 export interface Report {
   id: string;
 }
@@ -16,7 +22,9 @@ interface StoreState {
   posts: Post[];
   toggleLike: (id: number) => void;
   reportModal?: Report;
-  toggleReportModal: (report?: Report) => void;
+  setReportModal: (report?: Report) => void;
+  toastMessage?: ToastMessage;
+  setToastMessage: (message?: ToastMessage) => void;
 }
 
 const defaultPosts: Post[] = [
@@ -167,6 +175,7 @@ const useStore = create<StoreState>()(
     (set) => ({
       posts: defaultPosts,
       reportModal: undefined,
+      toastMessage: undefined,
       toggleLike: (id: number) =>
         set((state) => {
           const updatedPosts = state.posts.map((post) =>
@@ -174,7 +183,9 @@ const useStore = create<StoreState>()(
           );
           return { posts: updatedPosts };
         }),
-      toggleReportModal: (report?: Report) => set({ reportModal: report }),
+      setReportModal: (report?: Report) => set({ reportModal: report }),
+      setToastMessage: (message?: ToastMessage) =>
+        set({ toastMessage: message }),
     }),
     {
       name: "posts-storage",

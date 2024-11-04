@@ -1,4 +1,5 @@
 import { memo } from "react";
+import UseToastMessge from "../hooks/UseToastMessage";
 import useStore from "../store/useStore";
 
 interface PostCardProps {
@@ -16,8 +17,17 @@ const PostCard: React.FC<PostCardProps> = ({
   image,
   liked,
 }) => {
+  const { setToastMessage } = UseToastMessge();
   const toggleLike = useStore((state) => state.toggleLike);
-  const toggleReport = useStore((state) => state.toggleReportModal);
+  const setReportModal = useStore((state) => state.setReportModal);
+
+  const handleToggleLike = (id: number) => {
+    toggleLike(id);
+    setToastMessage({
+      type: liked ? "warning" : "info",
+      message: liked ? "Post Unliked" : "Post Liked",
+    });
+  };
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-md shadow-md p-4 mb-4">
@@ -32,7 +42,7 @@ const PostCard: React.FC<PostCardProps> = ({
       )}
       <div className="flex gap-3">
         <button
-          onClick={() => toggleLike(id)}
+          onClick={() => handleToggleLike(id)}
           className={`px-4 py-2 rounded ${
             liked ? "bg-blue-500 text-white" : "bg-gray-200 dark:bg-gray-700"
           }`}
@@ -40,7 +50,7 @@ const PostCard: React.FC<PostCardProps> = ({
           {liked ? "Unlike" : "Like"}
         </button>
         <button
-          onClick={() => toggleReport({ id: author })}
+          onClick={() => setReportModal({ id: author })}
           className={`px-4 py-2 rounded bg-red-500`}
         >
           Report
