@@ -23,8 +23,9 @@ interface StoreState {
   toggleLike: (id: number) => void;
   reportModal?: Report;
   setReportModal: (report?: Report) => void;
-  toastMessage?: ToastMessage;
-  setToastMessage: (message?: ToastMessage) => void;
+  toasts: ToastMessage[];
+  setToastMessage: (message: ToastMessage) => void;
+  removeToastMessage: (index: number) => void;
 }
 
 const defaultPosts: Post[] = [
@@ -175,7 +176,7 @@ const useStore = create<StoreState>()(
     (set) => ({
       posts: defaultPosts,
       reportModal: undefined,
-      toastMessage: undefined,
+      toasts: [],
       toggleLike: (id: number) =>
         set((state) => {
           const updatedPosts = state.posts.map((post) =>
@@ -184,9 +185,14 @@ const useStore = create<StoreState>()(
           return { posts: updatedPosts };
         }),
       setReportModal: (report?: Report) => set({ reportModal: report }),
-      setToastMessage: (message?: ToastMessage) =>
-        set({ toastMessage: message }),
+      setToastMessage: (toasts) =>
+        set((state) => ({ toasts: [...state.toasts, toasts] })),
+      removeToastMessage: (index) =>
+        set((state) => ({
+          toasts: state.toasts.filter((_, i) => i !== index),
+        })),
     }),
+
     {
       name: "posts-storage",
       storage: createJSONStorage(() => localStorage),
