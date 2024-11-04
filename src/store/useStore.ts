@@ -1,4 +1,3 @@
-// src/store/useStore.ts
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 export interface Post {
@@ -9,9 +8,15 @@ export interface Post {
   liked: boolean;
 }
 
+export interface Report {
+  id: string;
+}
+
 interface StoreState {
   posts: Post[];
   toggleLike: (id: number) => void;
+  reportModal?: Report;
+  toggleReportModal: (report?: Report) => void;
 }
 
 const defaultPosts: Post[] = [
@@ -161,6 +166,7 @@ const useStore = create<StoreState>()(
   persist(
     (set) => ({
       posts: defaultPosts,
+      reportModal: undefined,
       toggleLike: (id: number) =>
         set((state) => {
           const updatedPosts = state.posts.map((post) =>
@@ -168,6 +174,7 @@ const useStore = create<StoreState>()(
           );
           return { posts: updatedPosts };
         }),
+      toggleReportModal: (report?: Report) => set({ reportModal: report }),
     }),
     {
       name: "posts-storage",
