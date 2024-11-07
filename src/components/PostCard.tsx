@@ -1,5 +1,4 @@
 import { memo } from "react";
-import UseToastMessge from "../hooks/UseToastMessage";
 import useStore from "../store/useStore";
 
 interface PostCardProps {
@@ -17,8 +16,7 @@ const PostCard: React.FC<PostCardProps> = ({
   image,
   liked,
 }) => {
-  const { setToastMessage } = UseToastMessge();
-  const { toggleLike, setReportModal } = useStore();
+  const { toggleLike, setReportModal, setToastMessage } = useStore();
 
   const handleToggleLike = (id: number) => {
     toggleLike(id);

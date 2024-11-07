@@ -1,4 +1,3 @@
-import UseToastMessge from "../../hooks/UseToastMessage";
 import useStore from "../../store/useStore";
 import Modal from "../Modal";
 
@@ -14,8 +13,7 @@ const reportReasons = [
 ];
 
 const ReportPostModal = ({ isOpen }: ReprotPostModalProps) => {
-  const setReportModal = useStore((state) => state.setReportModal);
-  const { setToastMessage } = UseToastMessge();
+  const { setReportModal, setToastMessage } = useStore();
 
   const handleReport = () => {
     setReportModal(undefined);

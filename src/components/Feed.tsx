@@ -6,14 +6,12 @@ interface FeedProps {
 }
 
 const Feed = (props: FeedProps) => {
+  const { posts: allposts, reportModal } = useStore();
   const { onlyLikedItems } = props;
-  const allposts = useStore(({ posts }) => posts);
   const posts = onlyLikedItems ? allposts.filter((e) => e.liked) : allposts;
   const postCount = posts.length;
 
   // Issues: There are some unnecessary effects across the projects. Identify and remove them as it does not affect the functionality of the project.
-
-  const { reportModal } = useStore();
 
   return (
     <div className="container mx-auto p-4">

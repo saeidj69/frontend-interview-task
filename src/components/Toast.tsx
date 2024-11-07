@@ -2,21 +2,20 @@ import { useEffect } from "react";
 import useStore from "../store/useStore";
 
 const Toast: React.FC = () => {
-  const toasts = useStore((state) => state.toasts);
-  const removeToast = useStore((state) => state.removeToastMessage);
+  const { removeToastMessage, toasts } = useStore();
 
   useEffect(() => {
     const timers = toasts.map((_, index) => {
       const duration = toasts[index].duration || 2000; // Default duration
       return setTimeout(() => {
-        removeToast(index);
+        removeToastMessage(index);
       }, duration);
     });
 
     return () => {
       timers.forEach((timer) => clearTimeout(timer));
     };
-  }, [toasts, removeToast]);
+  }, [toasts, removeToastMessage]);
 
   return (
     <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 flex flex-col space-y-2">
