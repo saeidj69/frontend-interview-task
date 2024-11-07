@@ -18,7 +18,7 @@ export interface Report {
   id: string;
 }
 
-interface StoreState {
+export interface StoreState {
   posts: Post[];
   toggleLike: (id: number) => void;
   reportModal?: Report;
@@ -28,7 +28,7 @@ interface StoreState {
   removeToastMessage: (index: number) => void;
 }
 
-const defaultPosts: Post[] = [
+export const mockPosts: Post[] = [
   {
     id: 1,
     author: "John Doe",
@@ -174,7 +174,7 @@ const defaultPosts: Post[] = [
 const useStore = create<StoreState>()(
   persist(
     (set) => ({
-      posts: defaultPosts,
+      posts: mockPosts,
       reportModal: undefined,
       toasts: [],
       toggleLike: (id: number) =>

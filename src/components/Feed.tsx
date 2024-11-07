@@ -13,7 +13,7 @@ const Feed = (props: FeedProps) => {
 
   // Issues: There are some unnecessary effects across the projects. Identify and remove them as it does not affect the functionality of the project.
 
-  const reportModal = useStore((state) => state.reportModal);
+  const { reportModal } = useStore();
 
   return (
     <div className="container mx-auto p-4">

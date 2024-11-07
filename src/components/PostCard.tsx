@@ -18,8 +18,7 @@ const PostCard: React.FC<PostCardProps> = ({
   liked,
 }) => {
   const { setToastMessage } = UseToastMessge();
-  const toggleLike = useStore((state) => state.toggleLike);
-  const setReportModal = useStore((state) => state.setReportModal);
+  const { toggleLike, setReportModal } = useStore();
 
   const handleToggleLike = (id: number) => {
     toggleLike(id);
@@ -46,12 +45,14 @@ const PostCard: React.FC<PostCardProps> = ({
           className={`px-4 py-2 rounded ${
             liked ? "bg-blue-500 text-white" : "bg-gray-200 dark:bg-gray-700"
           }`}
+          role="like-button"
         >
           {liked ? "Unlike" : "Like"}
         </button>
         <button
           onClick={() => setReportModal({ id: author })}
           className={`px-4 py-2 rounded bg-red-500`}
+          role="report-button"
         >
           Report
         </button>
