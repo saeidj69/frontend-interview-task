@@ -16,7 +16,7 @@ const App: React.FC = () => {
         <Router>
           <Routes>
             <Route path="/" element={<Feed />} />
-            <Route path="/bookmark" element={<Feed onlyLikedItems />} />
+            <Route path="/bookmark" element={<Feed onlyBookmarkedItems />} />
           </Routes>
         </Router>
       </main>

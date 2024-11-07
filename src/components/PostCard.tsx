@@ -1,5 +1,6 @@
 import { memo } from "react";
 import useStore from "../store/useStore";
+import BookmarkButton from "./BookmarkButton";
 
 interface PostCardProps {
   id: number;
@@ -7,6 +8,7 @@ interface PostCardProps {
   content: string;
   image: string;
   liked: boolean;
+  bookmarked?: boolean;
 }
 
 const PostCard: React.FC<PostCardProps> = ({
@@ -15,14 +17,20 @@ const PostCard: React.FC<PostCardProps> = ({
   content,
   image,
   liked,
+  bookmarked = false,
 }) => {
-  const { toggleLike, setReportModal, setToastMessage } = useStore();
+  const { toggleLike, setReportModal, setToastMessage, toggleBookmark } =
+    useStore();
 
-  const handleToggleLike = (id: number) => {
+  const handleToggleLike = () => {
     toggleLike(id);
+  };
+
+  const handleTogglebookmark = () => {
+    toggleBookmark(id);
     setToastMessage({
-      type: liked ? "warning" : "info",
-      message: liked ? "Post Unliked" : "Post Liked",
+      type: bookmarked ? "warning" : "info",
+      message: bookmarked ? "Post Unbookmarked" : "Post Bookmarked",
     });
   };
 
@@ -39,7 +47,7 @@ const PostCard: React.FC<PostCardProps> = ({
       )}
       <div className="flex gap-3">
         <button
-          onClick={() => handleToggleLike(id)}
+          onClick={handleToggleLike}
           className={`px-4 py-2 rounded ${
             liked ? "bg-blue-500 text-white" : "bg-gray-200 dark:bg-gray-700"
           }`}
@@ -54,6 +62,10 @@ const PostCard: React.FC<PostCardProps> = ({
         >
           Report
         </button>
+        <BookmarkButton
+          isBookmarked={bookmarked}
+          onClick={handleTogglebookmark}
+        />
       </div>
     </div>
   );

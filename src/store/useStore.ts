@@ -6,6 +6,7 @@ export interface Post {
   content: string;
   image: string;
   liked: boolean;
+  bookmarked?: boolean;
 }
 
 export interface ToastMessage {
@@ -21,6 +22,7 @@ export interface Report {
 export interface StoreState {
   posts: Post[];
   toggleLike: (id: number) => void;
+  toggleBookmark: (id: number) => void;
   reportModal?: Report;
   setReportModal: (report?: Report) => void;
   toasts: ToastMessage[];
@@ -181,6 +183,13 @@ const useStore = create<StoreState>()(
         set((state) => {
           const updatedPosts = state.posts.map((post) =>
             post.id === id ? { ...post, liked: !post.liked } : post
+          );
+          return { posts: updatedPosts };
+        }),
+      toggleBookmark: (id: number) =>
+        set((state) => {
+          const updatedPosts = state.posts.map((post) =>
+            post.id === id ? { ...post, bookmarked: !post.bookmarked } : post
           );
           return { posts: updatedPosts };
         }),

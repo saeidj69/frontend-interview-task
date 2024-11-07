@@ -2,13 +2,17 @@ import useStore from "../store/useStore";
 import ReportPostModal from "./modals/ReportPostModal";
 import PostCard from "./PostCard";
 interface FeedProps {
-  onlyLikedItems?: boolean;
+  onlyBookmarkedItems?: boolean;
 }
 
 const Feed = (props: FeedProps) => {
   const { posts: allposts, reportModal } = useStore();
-  const { onlyLikedItems } = props;
-  const posts = onlyLikedItems ? allposts.filter((e) => e.liked) : allposts;
+  const { onlyBookmarkedItems } = props;
+
+  const posts = onlyBookmarkedItems
+    ? allposts.filter((e) => e.bookmarked)
+    : allposts;
+
   const postCount = posts.length;
 
   // Issues: There are some unnecessary effects across the projects. Identify and remove them as it does not affect the functionality of the project.
@@ -17,7 +21,7 @@ const Feed = (props: FeedProps) => {
     <div className="container mx-auto p-4">
       <ReportPostModal isOpen={!!reportModal} />
       <h1 className="text-2xl font-bold mb-4">
-        {onlyLikedItems ? "Liked" : ""} Posts ({postCount})
+        {onlyBookmarkedItems ? "Bookmarked" : ""} Posts ({postCount})
       </h1>{" "}
       {posts.map((post) => (
         <PostCard
@@ -27,6 +31,7 @@ const Feed = (props: FeedProps) => {
           content={post.content}
           image={post.image}
           liked={post.liked}
+          bookmarked={post.bookmarked}
         />
       ))}
     </div>
