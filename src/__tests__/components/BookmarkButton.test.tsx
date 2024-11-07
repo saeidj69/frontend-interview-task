@@ -1,22 +1,30 @@
-import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
-import PostCard from "../../components/PostCard.tsx";
-import useStore, { mockPosts } from "../../store/useStore.ts";
+import BookmarkButton from "../../components/BookmarkButton";
 
-describe("PostCard Component", () => {
-  test("Toggle Bookmark Button", () => {
-    const toggleLike = jest.fn();
-    const setToastMessage = jest.fn();
-    useStore.setState({ toggleLike, setToastMessage });
+describe("Bookmark Button", () => {
+  it("renders correctly when not bookmarked", () => {
+    render(<BookmarkButton isBookmarked={false} onClick={() => {}} />);
 
-    const { rerender } = render(<PostCard {...mockPosts[0]} />);
-    const likeButton = screen.getByRole("like-button");
-    expect(likeButton).toHaveTextContent("Like");
+    const button = screen.getByRole("button");
+    expect(button).toHaveTextContent("Bookmark");
+    expect(button).toHaveClass("bg-gray-100 text-gray-800");
+  });
 
-    fireEvent.click(likeButton);
+  it("renders correctly when bookmarked", () => {
+    render(<BookmarkButton isBookmarked={true} onClick={() => {}} />);
 
-    expect(toggleLike).toHaveBeenCalledTimes(1);
-    rerender(<PostCard {...{ ...mockPosts[0], liked: true }} />);
-    expect(likeButton).toHaveTextContent("Unlike");
+    const button = screen.getByRole("button");
+    expect(button).toHaveTextContent("Bookmarked");
+    expect(button).toHaveClass("bg-blue-100 text-blue-800");
+  });
+
+  it("calls the onClick function when clicked", () => {
+    const onClickMock = jest.fn();
+    render(<BookmarkButton isBookmarked={false} onClick={onClickMock} />);
+
+    const button = screen.getByRole("button");
+    fireEvent.click(button);
+
+    expect(onClickMock).toHaveBeenCalledTimes(1);
   });
 });

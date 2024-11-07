@@ -36,7 +36,7 @@ describe("PostCard Component", () => {
     fireEvent.click(reportButton);
 
     expect(setReportModal).toHaveBeenCalledWith({
-      id: "Author Name",
+      id: mockPosts[0].author,
     });
   });
 });
