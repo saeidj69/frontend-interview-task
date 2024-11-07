@@ -1,6 +1,7 @@
 import { memo } from "react";
 import useStore from "../store/useStore";
 import BookmarkButton from "./BookmarkButton";
+import LikeButton from "./LikeButton";
 
 interface PostCardProps {
   id: number;
@@ -46,15 +47,7 @@ const PostCard: React.FC<PostCardProps> = ({
         />
       )}
       <div className="flex gap-3">
-        <button
-          onClick={handleToggleLike}
-          className={`px-4 py-2 rounded ${
-            liked ? "bg-blue-500 text-white" : "bg-gray-200 dark:bg-gray-700"
-          }`}
-          role="like-button"
-        >
-          {liked ? "Unlike" : "Like"}
-        </button>
+        <LikeButton liked={liked} onClick={handleToggleLike} />
         <button
           onClick={() => setReportModal({ id: author })}
           className={`px-4 py-2 rounded bg-red-500`}
