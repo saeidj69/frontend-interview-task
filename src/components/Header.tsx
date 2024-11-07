@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import UseLocalStorage from "../hooks/UseLocalstorage";
 
 const Header: React.FC = () => {
-  // Issues: Dark mode does not work properly and does not keep its state after reloading. Find the issueand fix it.
   const [isDarkMode, setIsDarkMode] = UseLocalStorage<boolean>(
     "isDarkMode",
     true
