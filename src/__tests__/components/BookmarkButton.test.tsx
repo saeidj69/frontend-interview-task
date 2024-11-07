@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import BookmarkButton from "../../components/BookmarkButton";
+import BookmarkButton from "../../components/buttons/BookmarkButton";
 
 describe("Bookmark Button", () => {
   it("renders correctly when not bookmarked", () => {

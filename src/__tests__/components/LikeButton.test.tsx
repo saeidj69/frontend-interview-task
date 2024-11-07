@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import LikeButton from "../../components/LikeButton";
+import LikeButton from "../../components/buttons/LikeButton";
 
 describe("LikeButton", () => {
   it("renders correctly when not liked", () => {

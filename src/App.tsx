@@ -1,6 +1,6 @@
 import React from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Feed from "./components/Feed";
+
+import AppRouter from "./AppRouter";
 import Header from "./components/Header";
 import Toast from "./components/Toast";
 import useStore from "./store/useStore";
@@ -13,12 +13,7 @@ const App: React.FC = () => {
       <Header />
       <main>
         {toasts?.length ? <Toast /> : null}
-        <Router>
-          <Routes>
-            <Route path="/" element={<Feed />} />
-            <Route path="/bookmark" element={<Feed onlyBookmarkedItems />} />
-          </Routes>
-        </Router>
+        <AppRouter />
       </main>
     </div>
   );

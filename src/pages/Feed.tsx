@@ -1,6 +1,6 @@
+import PostCard from "../components/cards/PostCard";
+import ReportPostModal from "../components/modals/ReportPostModal";
 import useStore from "../store/useStore";
-import ReportPostModal from "./modals/ReportPostModal";
-import PostCard from "./PostCard";
 interface FeedProps {
   onlyBookmarkedItems?: boolean;
 }

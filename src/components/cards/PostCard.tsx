@@ -1,7 +1,7 @@
 import { memo } from "react";
-import useStore from "../store/useStore";
-import BookmarkButton from "./BookmarkButton";
-import LikeButton from "./LikeButton";
+import useStore from "../../store/useStore";
+import BookmarkButton from "../buttons/BookmarkButton";
+import LikeButton from "../buttons/LikeButton";
 
 interface PostCardProps {
   id: number;
