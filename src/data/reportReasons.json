@@ -1,0 +1,6 @@
+[
+  { "id": 1, "reason": "Change of mind", "default": true },
+  { "id": 2, "reason": "Shipping delay" },
+  { "id": 3, "reason": "Broken" },
+  { "id": 4, "reason": "Other" }
+]

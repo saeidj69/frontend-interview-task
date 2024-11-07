@@ -1,16 +1,11 @@
+import reportReasonsData from "../../data/reportReasons.json";
 import useStore from "../../store/useStore";
 import Modal from "../Modal";
-
 interface ReprotPostModalProps {
   isOpen: boolean;
 }
 
-const reportReasons = [
-  { id: 1, reason: "Change of mind", default: true },
-  { id: 2, reason: "Shipping delay" },
-  { id: 3, reason: "Broken" },
-  { id: 4, reason: "Other" },
-];
+const reportReasons = reportReasonsData;
 
 const ReportPostModal = ({ isOpen }: ReprotPostModalProps) => {
   const { setReportModal, setToastMessage } = useStore();
