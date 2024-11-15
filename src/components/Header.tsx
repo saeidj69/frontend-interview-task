@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 
 const Header: React.FC = () => {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    const savedDarkMode = localStorage.getItem("darkMode");
+    return savedDarkMode ? JSON.parse(savedDarkMode) : true;
+  });
 
   useEffect(() => {
     if (isDarkMode) {
@@ -9,7 +12,7 @@ const Header: React.FC = () => {
     } else {
       document.documentElement.classList.remove("dark");
     }
-    localStorage.setItem("darkMode", isDarkMode.toString());
+    localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
   }, [isDarkMode]);
 
   return (
