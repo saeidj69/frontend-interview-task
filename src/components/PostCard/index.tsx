@@ -14,6 +14,8 @@ interface PostCardProps {
   content: IPost["content"];
   canRemoveBookmark?: boolean;
   bookmarked?: IPost["bookmarked"];
+
+  onReport?: VoidFunction;
 }
 
 const PostCard: React.FC<PostCardProps> = ({
@@ -22,6 +24,7 @@ const PostCard: React.FC<PostCardProps> = ({
   liked,
   author,
   content,
+  onReport,
   bookmarked,
   canRemoveBookmark = false,
 }) => {
@@ -40,13 +43,24 @@ const PostCard: React.FC<PostCardProps> = ({
         />
       )}
 
-      <div className="flex gap-2">
-        <LikeButton liked={liked} toggle={() => toggleLike(id)} />
-        {(!bookmarked || canRemoveBookmark) && (
-          <BookmarkButton
-            bookmarked={bookmarked}
-            toggle={() => toggleBookmark(id)}
-          />
+      <div className="flex gap-2 items-center justify-between">
+        <div className="flex gap-2">
+          <LikeButton liked={liked} toggle={() => toggleLike(id)} />
+          {(!bookmarked || canRemoveBookmark) && (
+            <BookmarkButton
+              bookmarked={bookmarked}
+              toggle={() => toggleBookmark(id)}
+            />
+          )}
+        </div>
+
+        {onReport && (
+          <button
+            onClick={onReport}
+            className="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700"
+          >
+            Report
+          </button>
         )}
       </div>
     </div>
