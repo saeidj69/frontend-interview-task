@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 import { POSTS } from "../constants/posts";
 import type { IPost } from "../types/Post";
 
-type StoreState = {
+export type StoreState = {
   posts: IPost[];
   toggleLike: (id: number) => void;
   toggleBookmark: (id: number) => void;
