@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 import useStore from "../store/useStore";
-import PostCard from "./PostCard";
+import PostCard from "../components/PostCard";
 
 const Feed: React.FC = () => {
   const posts = useStore((state) => state.posts);
@@ -18,6 +18,7 @@ const Feed: React.FC = () => {
           liked={post.liked}
           author={post.author}
           content={post.content}
+          bookmarked={post.bookmarked}
         />
       ))}
     </div>
