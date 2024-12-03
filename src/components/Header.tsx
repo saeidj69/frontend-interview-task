@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const Header: React.FC = () => {
@@ -19,8 +20,13 @@ const Header: React.FC = () => {
       <h1 className="text-xl font-bold">Social Feed</h1>
 
       <div className="flex space-x-4 items-center">
+        <Link
+          to="/bookmarks"
+          className="text-white hover:underline"
+        >
+          Bookmarks
+        </Link>
 
-    
         <button
           onClick={() => setIsDarkMode(!isDarkMode)}
           className={`bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-300 ${

@@ -8,7 +8,7 @@ const Feed: React.FC = () => {
 <div className="container mx-auto p-4">
   <h1 className="text-2xl font-bold mb-6">Posts ({posts.length})</h1>
   
-  
+  {/* Render a message if no posts are available */}
   {posts.length === 0 ? (
     <p className="text-gray-500">No posts available</p>
   ) : (
@@ -21,7 +21,7 @@ const Feed: React.FC = () => {
           content={post.content}
           image={post.image}
           liked={post.liked}
-          
+          bookmarked={post.bookmarked}
         />
       ))}
     </div>
