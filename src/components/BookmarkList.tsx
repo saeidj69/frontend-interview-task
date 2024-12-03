@@ -1,7 +1,6 @@
-// src/components/BookmarkList.tsx
 import { useNavigate } from "react-router-dom";
 import useStore from "../store/useStore";
-import PostCard from "./PostCard"; // Reusing PostCard to display posts
+import PostCard from "./PostCard"; 
 
 const BookmarkList: React.FC = () => {
   const navigate = useNavigate();
@@ -9,7 +8,6 @@ const BookmarkList: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
-      {/* Back Button to Navigate to Feed */}
       <button
         onClick={() => navigate("/")}
         className="text-blue-500 underline mb-4"
