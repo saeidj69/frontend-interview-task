@@ -1,8 +1,7 @@
-import { memo, useState } from "react";
+import { memo, useState, useCallback } from "react";
 import useStore from "../store/useStore";
 import Modal from "./Modal";
-import Toast from "./Toast"; // 
-
+import Toast from "./Toast";
 
 interface PostCardProps {
   id: number;
@@ -28,8 +27,7 @@ const PostCard: React.FC<PostCardProps> = ({
   const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
   const [description, setDescription] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [toastMessage, setToastMessage] = useState<string | null>(null); 
-
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const reportReasons = [
     "Spam",
@@ -38,7 +36,7 @@ const PostCard: React.FC<PostCardProps> = ({
     "Inappropriate Content",
   ];
 
-  const handleReportSubmit = () => {
+  const handleReportSubmit = useCallback(() => {
     if (selectedReasons.length === 0) {
       setError("Please select at least one reason.");
       return;
@@ -56,21 +54,21 @@ const PostCard: React.FC<PostCardProps> = ({
     setSelectedReasons([]);
     setDescription("");
     setError(null);
-  };
+  }, [selectedReasons, description, id]);
 
-  const handleBookmarkItem = (id: number, bookmarked: boolean) => {    
+  const handleBookmarkItem = useCallback((id: number, bookmarked: boolean) => {
     toggleBookmark(id);
     if (!bookmarked) setToastMessage("bookmarked successfully!");
     else setToastMessage("remove bookmarke successfully!");
-  };
+  }, [toggleBookmark]);
 
-  const toggleReason = (reason: string) => {
+  const toggleReason = useCallback((reason: string) => {
     setSelectedReasons((prev) =>
       prev.includes(reason)
         ? prev.filter((r) => r !== reason)
         : [...prev, reason]
     );
-  };
+  }, []);
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-md shadow-md p-4 mb-4">
@@ -96,7 +94,7 @@ const PostCard: React.FC<PostCardProps> = ({
         {liked ? "Unlike" : "Like"}
       </button>
       <button
-        onClick={() => handleBookmarkItem(id, bookmarked)}        
+        onClick={() => handleBookmarkItem(id, bookmarked)}
         className={`px-4 py-2 ml-4 rounded ${
           bookmarked
             ? "bg-yellow-500 text-white"
@@ -129,10 +127,7 @@ const PostCard: React.FC<PostCardProps> = ({
                   onChange={() => toggleReason(reason)}
                   className="mr-2"
                 />
-                <label
-                  htmlFor={reason}
-                  className="text-gray-700 dark:text-gray-300"
-                >
+                <label htmlFor={reason} className="text-gray-700 dark:text-gray-300">
                   {reason}
                 </label>
               </div>
@@ -153,7 +148,6 @@ const PostCard: React.FC<PostCardProps> = ({
             />
           </div>
           <div className="flex justify-between mt-4">
- 
             <button
               type="button"
               onClick={handleReportSubmit}
@@ -171,6 +165,7 @@ const PostCard: React.FC<PostCardProps> = ({
           </div>
         </form>
       </Modal>
+
       {toastMessage && (
         <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
       )}
