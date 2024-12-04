@@ -1,6 +1,8 @@
 import { memo, useState } from "react";
 import useStore from "../store/useStore";
 import Modal from "./Modal";
+import Toast from "./Toast"; // 
+
 
 interface PostCardProps {
   id: number;
@@ -26,6 +28,8 @@ const PostCard: React.FC<PostCardProps> = ({
   const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
   const [description, setDescription] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null); 
+
 
   const reportReasons = [
     "Spam",
@@ -45,10 +49,19 @@ const PostCard: React.FC<PostCardProps> = ({
     }
 
     console.log("Report Submitted:", { id, selectedReasons, description });
+
+    setToastMessage("Your report has been submitted successfully!");
+
     setIsReportModalOpen(false);
     setSelectedReasons([]);
     setDescription("");
     setError(null);
+  };
+
+  const handleBookmarkItem = (id: number, bookmarked: boolean) => {    
+    toggleBookmark(id);
+    if (!bookmarked) setToastMessage("bookmarked successfully!");
+    else setToastMessage("remove bookmarke successfully!");
   };
 
   const toggleReason = (reason: string) => {
@@ -83,7 +96,7 @@ const PostCard: React.FC<PostCardProps> = ({
         {liked ? "Unlike" : "Like"}
       </button>
       <button
-        onClick={() => toggleBookmark(id)}
+        onClick={() => handleBookmarkItem(id, bookmarked)}        
         className={`px-4 py-2 ml-4 rounded ${
           bookmarked
             ? "bg-yellow-500 text-white"
@@ -158,6 +171,9 @@ const PostCard: React.FC<PostCardProps> = ({
           </div>
         </form>
       </Modal>
+      {toastMessage && (
+        <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
+      )}
     </div>
   );
 };
